@@ -1,23 +1,14 @@
 import { StarIcon, CodeBracketIcon } from '@heroicons/react/24/outline';
-
-interface Repo {
-  id: number;
-  name: string;
-  description: string | null;
-  html_url: string;
-  topics?: string[];
-  stargazers_count: number;
-  forks_count: number;
-}
+import { PinnedRepositoryData } from "@/components/github/githubQuery";
 
 interface ProjectCardProps {
-  repo: Repo;
+  repo: PinnedRepositoryData;
 }
 
-const ProjectCard = ({ repo }: ProjectCardProps) => {
+export default function ProjectCard({ repo }: ProjectCardProps) {
   return (
     <a
-      href={repo.html_url}
+      href={repo.url}
       target="_blank"
       rel="noopener noreferrer"
       className="group relative bg-white/90 backdrop-blur-sm rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden"
@@ -32,13 +23,25 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
           {repo.description || "A personal development project"}
         </p>
 
-        <div className="flex flex-wrap gap-2 mb-4">
-          {repo.topics?.slice(0, 3).map((topic) => (
+        {repo.primaryLanguage && (
+          <div className="flex items-center mb-4">
             <span
-              key={topic}
+              className="w-3 h-3 rounded-full mr-2"
+              style={{ backgroundColor: repo.primaryLanguage.color }}
+            />
+            <span className="text-sm text-gray-500">
+              {repo.primaryLanguage.name}
+            </span>
+          </div>
+        )}
+
+        <div className="flex flex-wrap gap-2 mb-4">
+          {repo.repositoryTopics.edges.map(({ node }) => (
+            <span
+              key={node.topic.name}
               className="px-2 py-1 bg-red-50 text-red-600 text-xs rounded-full"
             >
-              {topic}
+              {node.topic.name}
             </span>
           ))}
         </div>
@@ -46,11 +49,11 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
         <div className="flex items-center justify-between text-sm text-gray-500">
           <div className="flex items-center space-x-2">
             <StarIcon className="w-4 h-4" />
-            <span>{repo.stargazers_count}</span>
+            <span>{repo.stargazerCount}</span>
           </div>
           <div className="flex items-center space-x-2">
             <CodeBracketIcon className="w-4 h-4" />
-            <span>{repo.forks_count}</span>
+            <span>{repo.forkCount}</span>
           </div>
         </div>
 
@@ -58,6 +61,4 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
       </div>
     </a>
   );
-};
-
-export default ProjectCard;
+}
