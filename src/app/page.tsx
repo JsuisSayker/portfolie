@@ -7,9 +7,15 @@ import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 import SectionTitle from '@/components/sectionTitle';
 import ProjectCard from '../components/projectCard';
+import Footer from '@/app/footer'
+import AboutSection from '@/components/aboutSection';
+import ProjectSection from '@/components/projectSection';
+
+import TokenGeter from './tokenGeter';
 import { GetPinnedRepositories, PinnedRepositoryData } from "@/components/github/githubQuery";
 import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+
 
 export default function Home() {
   const [repositories, setRepositories] = useState<PinnedRepositoryData[]>([]);
@@ -19,12 +25,13 @@ export default function Home() {
 
   useEffect(() => {
     const fetchPinnedRepos = async () => {
+      const token = await TokenGeter()
       try {
         const response = await fetch("https://api.github.com/graphql", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ query: GetPinnedRepositories }),
         });
@@ -77,106 +84,13 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section ref={aboutRef} className="py-20 px-4 md:px-8 relative">
-        <div className="max-w-4xl mx-auto">
-          <SectionTitle title="About Me" />
-          <div className={`mt-8 transition-opacity duration-500 ${aboutInView ? 'opacity-100' : 'opacity-0'}`}>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              こんにちは！ I'm Killian, a developer with a passion for Japanese culture and
-              anime. With 3+ years of experience in web development, I combine technical expertise
-              with creative design to build immersive digital experiences. When I'm not coding,
-              you'll find me watching the latest seasonal anime or practicing Japanese.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-24 justify-center">
-              <a
-                href="/Killian_Trouvé_CV.pdf"
-                download
-                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                <span className="text-lg">Download CV</span>
-                <FontAwesomeIcon icon={faFileArrowDown} />
-              </a>
-              <a
-                href="https://linkedin.com/in/killian-trouvé"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                <span className="text-lg">LinkedIn Profile</span>
-                <FontAwesomeIcon icon={faLinkedin} />
-              </a>
-              <a
-                href="mailto:killian.trouve@orange.fr"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                <span className="text-lg">Email</span>
-                <FontAwesomeIcon icon={faEnvelope} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <AboutSection aboutRef={aboutRef} aboutInView={aboutInView} />
 
       {/* Projects Section */}
-      <section className="py-20 px-4 md:px-8 bg-white bg-opacity-50 backdrop-blur-sm">
-          <div className="max-w-6xl mx-auto">
-            <SectionTitle title="Pinned Projects" />
-
-            {loading && (
-              <div className="text-center py-8">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto"></div>
-                <p className="mt-4 text-gray-600">Loading projects...</p>
-              </div>
-            )}
-
-            {error && (
-              <div className="text-center py-8 text-red-600">
-                Error: {error}
-              </div>
-            )}
-
-            {!loading && !error && (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-                {repositories.map((repo) => (
-                  <ProjectCard key={repo.id} repo={repo} />
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
+      <ProjectSection repositories={repositories} loading={loading} error={error} />
 
       {/* Footer */}
-      <footer className="py-8 text-center text-gray-600">
-        <p>✨ ありがとうございます！ - Thank you for visiting! ✨</p>
-        <div className="mt-4 flex justify-center space-x-4">
-          <a
-            href="https://github.com/JsuisSayker"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-red-600 transition-colors"
-          >
-            GitHub
-          </a>
-          <span className="text-gray-400">•</span>
-          <a
-            href="https://linkedin.com/in/killian-trouvé"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-blue-600 transition-colors"
-          >
-            LinkedIn
-          </a>
-          <span className="text-gray-400">•</span>
-          <a
-            href="mailto:killian.trouve@orange.fr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-orange-600 transition-colors"
-          >
-            Email
-          </a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
   }

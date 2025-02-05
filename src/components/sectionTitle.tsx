@@ -4,7 +4,7 @@ interface SectionTitleProps {
   title: string;
 }
 
-const SectionTitle = ({ title }: SectionTitleProps) => {
+export default function SectionTitle({ title }: SectionTitleProps) {
   return (
     <div className="flex flex-col items-center mb-12">
       <div className="relative">
@@ -26,5 +26,3 @@ const SectionTitle = ({ title }: SectionTitleProps) => {
     </div>
   );
 };
-
-export default SectionTitle;
