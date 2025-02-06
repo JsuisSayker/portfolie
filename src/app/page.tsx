@@ -70,18 +70,42 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-pink-100 to-red-100">
         <title>Killian Trouvé - Japan-Themed Portfolio</title>
         <section className="h-screen flex items-center justify-center relative">
-        <div className="text-center space-y-4">
-          <h1 className="text-6xl md:text-8xl font-bold text-red-600 mb-4 animate-fade-in">
-            雫 <span className="text-4xl md:text-6xl">(Shizuku)</span>
-          </h1>
-          <h2 className="text-3xl md:text-4xl font-semibold text-gray-800">
-            Killian Trouvé
-          </h2>
-          <p className="text-xl md:text-2xl text-gray-600 mt-2">
-            Developer & Anime Enthusiast
-          </p>
+  <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8">
+    {/* Left Text Content */}
+    <div className="text-center space-y-4 md:w-1/2">
+      <h1 className="text-6xl md:text-8xl font-bold text-red-600 mb-4 animate-fade-in">
+        雫 <span className="text-4xl md:text-6xl">(Shizuku)</span>
+      </h1>
+      <h2 className="text-3xl md:text-4xl font-semibold text-gray-800">
+        Killian Trouvé
+      </h2>
+      <p className="text-xl md:text-2xl text-gray-600 mt-2">
+        Developer & Anime Enthusiast
+      </p>
+    </div>
+
+    {/* Right Visual Elements */}
+    <div className="relative md:w-1/2 flex justify-center items-center h-[500px]">
+      {/* Sakura Tree Icon */}
+      <div className="absolute top-0 right-0 transform translate-x-16 -translate-y-16">
+        <img src="/sakura-tree.png" alt="Sakura Tree" className="w-64" />
+      </div>
+
+      {/* Profile Image */}
+      <div className="absolute bottom-0 transform translate-y-16 z-10">
+        <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-pink-200 hover:border-red-300 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-xl">
+          <a href='https://github.com/JsuisSayker'>
+          <img
+            src="/github-profile.jpeg"
+            alt="Killian Trouvé"
+            className="w-full h-full object-cover"
+            />
+            </a>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* About Section */}
       <AboutSection aboutRef={aboutRef} aboutInView={aboutInView} />
