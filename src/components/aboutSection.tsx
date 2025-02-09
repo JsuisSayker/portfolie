@@ -18,9 +18,11 @@ export default function AboutSection(aboutSectionProps: AboutSectionProps) {
                 <div className={`mt-8 transition-opacity duration-500 ${aboutSectionProps.aboutInView ? 'opacity-100' : 'opacity-0'}`}>
                 <p className="text-lg text-gray-700 leading-relaxed">
                     こんにちは！ I'm Killian, a developer with a passion for Japanese culture and
-                    anime. With 3+ years of experience in web development, I combine technical expertise
-                    with creative design to build immersive digital experiences. When I'm not coding,
-                    you'll find me watching the latest seasonal anime or practicing Japanese.
+                    anime. With 3+ years of experience in development, I specialize in creating efficient,
+                    scalable, and automated solutions that deliver exceptional results. When I'm not coding,
+                    you'll find me watching the latest seasonal anime or practicing Japanese. I'm always excited to collaborate on innovative projects and bring creative ideas to life.
+                    If you're interested in working together or just want to chat about tech and anime,
+                    feel free to reach out!
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-24 justify-center">
                     <a
